@@ -1,0 +1,9 @@
+{
+	"author" : "Cryotheum",
+	"title" : "Kakoge",
+	"type" : "tool",
+	"tags" : ["fun", "build"],
+	"ignore" : [
+		"*"
+	]
+}

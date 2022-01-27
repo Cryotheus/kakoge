@@ -1,0 +1,1 @@
+KAKOGE = KAKOGE or {}
