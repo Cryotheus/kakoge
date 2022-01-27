@@ -1,8 +1,5 @@
-try:
-    from PIL import Image
-except ImportError:
-    #import Image
-	print("pillow!")
+try: from PIL import Image
+except ImportError: import Image
 
 import pathlib
 import pytesseract
@@ -11,19 +8,15 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 #example tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract'
 
+config_line = "kakoge"
+language_order = ("kor", "kor_kakoge", "kor_rekakoge", "script/Hangul", "kor+kor_kakoge+kor_rekakoge")
+threshold = 100
+
 #image_to_boxes
 #image_to_data
 #image_to_string
-#Image.open
-#print(pytesseract.image_to_string(
-#	'test_korean.txt',
-#	lang='kor',
-#	config=config_line#,
-#	#output_type=pytesseract.Output.DICT
-#))
 
-config_line = "kakoge"
-threshold = 100
+#tesseract configuration parameters
 #tessedit_zero_rejection T
 #tessedit_reject_doc_percent=65.00 %rej allowed before rej whole doc
 #tessedit_reject_block_percent=45.00 %rej allowed before rej whole block
@@ -32,12 +25,10 @@ threshold = 100
 #tessedit_preserve_blk_rej_perfect_wds=true Only rej partially rejected words in block rejection
 #tessedit_preserve_row_rej_perfect_wds=true Only rej partially rejected words in row rejection
 #tessedit_reject_bad_qual_wds=true Reject all bad quality wds
-
 #tessedit_minimal_rejection=false Only reject tess failures
 #tessedit_zero_rejection=false Don't reject ANYTHING
 #tessedit_zero_kelvin_rejection=false Don't reject ANYTHING AT ALL
 
-#attempt
 #tessedit_reject_bad_qual_wds F
 #tessedit_reject_doc_percent 90
 #tessedit_reject_block_percent 85
@@ -51,11 +42,6 @@ threshold = 100
 #bland_unrej T
 #textord_no_rejects T
 
-#kor_kakoge
-
-language_order = ("kor", "kor_kakoge", "kor_rekakoge", "script/Hangul", "kor+kor_kakoge+kor_rekakoge")
-
-#functions
 def has_crops(product_path):
 	return product_path.joinpath("crops").exists()
 
@@ -103,7 +89,6 @@ def get_crops(product_path):
 				if text != "": count_cleanup += 1
 			if text == "": print("no text\n")
 			else:
-				#print("text:\n" + text)
 				print("text\n")
 				
 				file = open(member.with_suffix(".txt"), "wb")
@@ -148,9 +133,12 @@ def query_id(downloads):
 
 if __name__ == "__main__":
 	data_path = get_data_path(__file__)
-	download_path = data_path.joinpath("download")
 	
 	if data_path:
-		downloads = get_downloads(download_path)
+		download_path = data_path.joinpath("download")
 		
-		query_id(downloads)
+		if data_path:
+			downloads = get_downloads(download_path)
+			
+			query_id(downloads)
+	else: input("Make sure this file is anywhere inside your garrysmod folder. This can be inside the kakoge addon folder if you'd like.")
